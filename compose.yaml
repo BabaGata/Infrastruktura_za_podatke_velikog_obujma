@@ -1,0 +1,33 @@
+version: '3'
+services:
+  flask-app:
+    build:
+      context: .
+      dockerfile: server-app
+    ports:
+      - "5000:5000"
+    depends_on:
+      - rabbitmq
+
+  rabbitmq:
+    image: "rabbitmq:3.9"
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: "guest"
+      RABBITMQ_DEFAULT_PASS: "guest"
+
+  rabbitmq-producer:
+    build:
+      context: .
+      dockerfile: rabbitmq-producer
+    depends_on:
+      - rabbitmq
+
+  rabbitmq-consumer:
+    build:
+      context: .
+      dockerfile: rabbitmq-consumer
+    depends_on:
+      - rabbitmq
