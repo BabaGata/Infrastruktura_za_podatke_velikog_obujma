@@ -3,7 +3,7 @@ services:
   flask-app:
     build:
       context: .
-      dockerfile: server-app
+      dockerfile: Dockerfile-flask
     ports:
       - "5000:5000"
     depends_on:
@@ -21,13 +21,13 @@ services:
   rabbitmq-producer:
     build:
       context: .
-      dockerfile: rabbitmq-producer
+      dockerfile: Dockerfile-rabbitmq-producer
     depends_on:
       - rabbitmq
 
   rabbitmq-consumer:
     build:
       context: .
-      dockerfile: rabbitmq-consumer
+      dockerfile: Dockerfile-rabbitmq-consumer
     depends_on:
       - rabbitmq
